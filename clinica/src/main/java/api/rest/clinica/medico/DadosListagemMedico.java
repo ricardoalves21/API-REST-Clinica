@@ -6,6 +6,8 @@ import org.hibernate.validator.constraints.Length;
 
 public record DadosListagemMedico(
 
+    Long id,
+
     @NotBlank
     @Length(max = 100)
     String nome,
@@ -25,6 +27,6 @@ public record DadosListagemMedico(
 
 ) {
     public DadosListagemMedico(Medico medico) {
-        this(medico.getNome(), medico.getEmail(), medico.getCrm(), medico.getEspecialidade());
+        this(medico.getId(), medico.getNome(), medico.getEmail(), medico.getCrm(), medico.getEspecialidade());
     }
 }

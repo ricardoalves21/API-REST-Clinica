@@ -1,18 +1,14 @@
 package api.rest.clinica.controller;
 
-import api.rest.clinica.medico.DadosCadastroMedico;
-import api.rest.clinica.medico.DadosListagemMedico;
-import api.rest.clinica.medico.Medico;
-import api.rest.clinica.medico.MedicoRepository;
+import api.rest.clinica.medico.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/medicos")
@@ -23,16 +19,35 @@ public class MedicoController {
 
     @PostMapping
     @Transactional
-    public void cadastrar(@RequestBody @Valid DadosCadastroMedico dados) {
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroMedico dados) {
         repository.save(new Medico(dados));
     }
 
     @GetMapping
-    public Page<DadosListagemMedico> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
-        return repository.findAll(paginacao)
+    public ResponseEntity<Page<DadosListagemMedico>> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
+        var page = repository.findAllByAtivoTrue(paginacao)
                 .map(DadosListagemMedico::new);
+
+        return ResponseEntity.ok(page);
+
     }
 
+    @PutMapping
+    @Transactional
+    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados) {
+        Medico medico = repository.getReferenceById(dados.id());
+        medico.atualizarInformacoes(dados);
 
+        return ResponseEntity.ok(new dadosDetalhamentoMedico(medico));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity excluir(@PathVariable Long id) {
+        Medico medico = repository.getReferenceById(id);
+        medico.excluir();
+
+        return ResponseEntity.noContent().build();
+    }
 
 }

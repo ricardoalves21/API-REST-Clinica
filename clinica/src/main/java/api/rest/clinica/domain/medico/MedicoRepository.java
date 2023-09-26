@@ -1,4 +1,4 @@
-package api.rest.clinica.medico;
+package api.rest.clinica.domain.medico;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

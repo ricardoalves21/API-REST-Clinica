@@ -1,4 +1,4 @@
-package api.rest.clinica.endereco;
+package api.rest.clinica.domain.endereco;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package api.rest.clinica.medico;
+package api.rest.clinica.domain.medico;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -27,6 +27,12 @@ public record DadosListagemMedico(
 
 ) {
     public DadosListagemMedico(Medico medico) {
-        this(medico.getId(), medico.getNome(), medico.getEmail(), medico.getCrm(), medico.getEspecialidade());
+        this(
+                medico.getId(),
+                medico.getNome(),
+                medico.getEmail(),
+                medico.getCrm(),
+                medico.getEspecialidade()
+        );
     }
 }

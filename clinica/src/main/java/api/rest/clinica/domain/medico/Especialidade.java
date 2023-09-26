@@ -1,4 +1,4 @@
-package api.rest.clinica.medico;
+package api.rest.clinica.domain.medico;
 
 public enum Especialidade {
 

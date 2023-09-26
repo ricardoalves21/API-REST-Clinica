@@ -1,4 +1,4 @@
-package api.rest.clinica.endereco;
+package api.rest.clinica.domain.endereco;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
